@@ -1,7 +1,7 @@
 # 学习 node js 的第一天
 
 
-<a href="#aaa">什么是Node.js?</a>
+<a href="#什么是Node.js">什么是Node.js?</a>
 
 ### <a name="#1">什么是Node.js?</a>
 
@@ -36,7 +36,7 @@
 
 
 
- ### <a name="aaa">什么是Node.js?</a>
+ ### <a name="什么是Node.js">什么是Node.js?</a>
 
 |    a    |       b       |      c     |
 |:-------:|:------------- | ----------:|
@@ -47,18 +47,3 @@
 
 
 
-```flow    
-
-st => start: 
-e => end:         
-c1 => condition:  
-c2 => condition:   
-c3 => condition:    
-io => inputoutput:
-st -> c1(yes,right)->c2(yes,right)->c3(yes,right)->io->e
-
-c1(no)->e                   
-c2(no)->e                   
-c3(no)->e
-
-```
