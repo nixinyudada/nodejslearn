@@ -1,9 +1,13 @@
 # 学习 node js 的第一天
 
 
-<a href="#什么是Node.js">什么是Node.js?</a>
+- 初识 Node.js
+    - <a href="#什么是Node.js">什么是Node.js?</a>
+    - <a href="#Node.js能做什么">Node.js能做什么?</a>
+    - <a href="#学习资源">学习资源</a>
+    - <a href="#学习任务">学习任务</a>
 
-### <a name="#1">什么是Node.js?</a>
+### <a name="#什么是Node.js">什么是Node.js?</a>
 
 [node js 中文社区](https://cnodejs.org/)
 
@@ -36,14 +40,60 @@
 
 
 
- ### <a name="什么是Node.js">什么是Node.js?</a>
+ ### <a name="Node.js能做什么">Node.js能做什么?</a>
 
-|    a    |       b       |      c     |
-|:-------:|:------------- | ----------:|
-|   居中  |     左对齐    |   右对齐   |
-|   居中  |     左对齐    |   右对齐   |
-|   居中  |     左对齐    |   右对齐   |
-|=========|===============|============|
+ - Web 服务器后台
+ - 命令行工具
+    - npm(node)
+    - git(c)
+    - hexo(node)
+    - 等等
+    - 对于前端开发接触比较多的命令行工具
+        - webpack
+        - gulp
+        - npm
+
+
+
+ ### <a name="学习资源">学习资源</a>
+
+ - 《深入浅出Node.js》 => 对理解原理底层有帮助
+ - 《Node.js权威指南》 => API讲解
+ - [javascript标准参考教程(alpha)](http://javascript.ruanyifeng.com) => 阮一峰
+ - [Node入门](http://www.nodebeginner.org/index-zh-cn.html)
+ - [官方API文档](http://nodejs.org/dist/latest-v6.x/docs/api)
+ - [CNODE社区](http://cnodejs.org)
+ - [CNODE-新手入门](http://cnodejs.org/getstart)
+
+
+
+
+
+
+
+
+ ### <a name="学习任务">学习任务</a>
+
+ - B/S 编程模型
+    - Browser - Server
+    - back-end
+    - 通过学习Node，掌握BS编程模型
+- 模块化编程
+    - RequireJS
+    - SeaJS
+    - 在Node中可以像`@import()`一样来引用加载javascript脚本文件（模块化）
+- Node常用API
+- 异步编程
+    - 回调函数
+    - Promise
+    - async
+    - generator
+- Express Web 开发框架
+- EcmaScript 6 (ES6)
+- ...
+
+
+
 
 
 
