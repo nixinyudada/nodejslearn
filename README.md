@@ -19,6 +19,13 @@
     - <a href="#修改完代码自动重启">修改完代码自动重启</a>
     - <a href="#服务端解析客户端POST数据">服务端解析客户端POST数据</a>
     - <a href="#Express路由模块的提取">Express路由模块的提取</a>
+- <a href="#在Node.js中操作Mongodb">在 Node.js 中操作 Mongodb</a>
+    - <a href="#"></a>
+    - <a href="#"></a>
+    - <a href="#"></a>
+    - <a href="#"></a>
+
+
 
 ### <a name="#什么是Node.js">什么是Node.js?</a>
 
@@ -479,6 +486,254 @@ app.use(router)
 
 > 模块职责尽可能要**单一**
 
+
+
+
+
+
+
+###  <a name="MongoDB">MongoDB</a>
+
+[MongoDB 菜鸟教程](http://www.runoob.com/mongodb/mongodb-tutorial.html)
+
+1. 关系型数据库与非关系型数据库
+
+> 表与表之间是存在关系的
+
+- 关系型数据库
+    - 需要通过`sql`语言来进行查询
+    - 需要设计表结构
+    - 支持数据表约束
+        - 唯一的
+        - 主键
+        - 默认值
+        - 非空
+- 非关系型数据库则非常灵活
+    - 键值对
+- MongoDB是非关系型数据库中最像关系型数据库的
+    - 数据库 -> 数据库
+    - 数据表 -> 集合（数组）
+    - 表记录 -> (文档对象)
+- MongoDB 不需要设计表结构
+也就是说可以任意往里面存数据，没有结构性这么一说    
+
+
+#### 连接和退出数据库
+
+连接：
+
+```js
+# mongodb 默认使用执行 mongod 命令所处盘符根目录下的 /data/db 作为自己的数据库存储目录
+# 所以在第一次执行该命令之前自己手动新建一个 /data/db
+
+mongod
+```
+
+如果想要修改默认的数据存储目录，可以：
+```js
+mongod --dbpath=数据存储目录路径
+```
+
+停止：
+```js
+在开启服务的控制台，直接 Ctrl+c 即可停止
+或者直接关闭开启服务的控制台也可以
+```
+
+
+
+### <a name="在Node.js中操作Mongodb">在 Node.js 中操作 Mongodb</a>
+
+使用官方的 `Mongodb` 包来操作
+
+[node-mongodb-native](https://github.com/mongodb/node-mongodb-native)
+
+使用第三方 Mongoose 来操作 MongoDB 数据库
+
+第三方包： `mongoose` 基于 MongoDB 官方的 `MongoDB` 包再一次做了封装
+
+[mongoose](https://mongoosejs.com/)
+
+> 好像被墙了
+
+安装：`npm i mongoose`
+
+使用：插入一条数据
+
+```js
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test',{useNewUrlParser: true});
+
+const Cat = mongoose.model('Cat', { name: String });
+
+const kitty = new Cat({ name: 'Zildjian' });
+kitty.save().then(() => console.log('meow'));
+```
+
+
+#### Mongoose 使用方法
+
+设计表结构：
+**约束**
+> 约束的目的是为了保证数据的完整性，不要有脏数据
+
+```js
+const blogSchema = new Schema({
+    title:String,
+    author:String,
+    body:String,
+    comments:[{ body:String, date:Date }],
+    date:{ type:Date,default:Date.now },
+    hidden: Boolean,
+    meta: {
+        votes:Number,
+        favs:Number
+    }
+})
+```
+
+
+
+
+
+##### 初始化一个表结构
+
+```js
+var mongoose = require('mongoose')
+
+// 1. 连接数据库
+// 指定连接的数据库不需要存在，当你插入第一条数据之后就会自动被创建出来
+
+mongoose.connect('mongodb://localhost/itcast1')
+
+// 2. 设计集合结构（表结构）
+// 字段名称就是表结构中的属性名称
+// 值
+// 约束的目的是为了保证数据的完整性，不要有脏数据
+var userSchema = new mongoose.Schema({
+    username:{
+        type:String,
+        required:true //必须有 
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    email: {
+        type:String
+    }
+})
+
+// 3. 将文档结构发布为模型
+// mongoose.model 方法就是用来将一个架构发布为 model
+// 第一个参数：传入一个大写名词单数字符串用来表示你的数据库名称
+//          mongoose 会自动将大写名词的字符串生成小写复数 的集合名称
+//          例如这里的 User 最终会变为 users 集合名称
+
+// 第二个参数：架构 Schema  返回值：模型架构函数
+var User = mongoose.model('User',userSchema)
+
+
+// 4. 当我们有了模型构造函数之后，就可以使用这个构造函数对 users 中的数据为所欲为了
+
+
+var admin = new User({
+    username:'amdin11111111',
+    password:'123456',
+    email:'admin11111@admin.com'
+})
+```
+
+##### 新增数据
+
+```js
+admin.save((err,ret)=>{
+    if (err){
+        console.log('保存失败！')
+    }else{
+        console.log('保存成功！')
+        console.log(ret)
+    }
+})
+```
+
+
+##### 查询数据
+
+```js
+User.find((err,ret)=>{
+    if (err){
+        console.log("查询失败！")
+    }else{
+        console.log(ret)
+    }
+})
+```
+
+##### 按条件查询数据
+
+```js
+User.find({
+    password:'123456'
+},(err,ret)=>{
+    if (err){
+        console.log("查询失败！")
+    }else{
+        console.log(ret)
+    }
+})
+```
+
+
+
+##### 删除数据
+
+```js
+User.remove({
+    username:'amdin'
+},(err,ret)=>{
+    if (err){
+        console.log('删除失败！')
+    }else{
+        console.log('删除成功！')
+        console.log(ret)
+    }
+})
+```
+
+
+##### 更新数据
+
+```js
+User.findByIdAndUpdate('5c1511d693d7073bc84cf8c6',{
+    password:'321'
+},(err,ret)=>{
+    if (err){
+        console.log('更新失败！')
+    }else{
+        console.log('更新成功！')
+    }
+})
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ###  <a name="CRUD增删改查">CRUD增删改查</a>
 
 
@@ -489,8 +744,9 @@ app.use(router)
 
 
 
-断片记录点！
-[该学这一章了>>>](https://www.bilibili.com/video/av27670326?t=379&p=21)
+
+
+
 
 
 

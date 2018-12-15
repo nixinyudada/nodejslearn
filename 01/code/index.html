@@ -1,0 +1,29 @@
+<script src="node_modules/art-template/lib/template-web.js"></script>
+<script type="text/template" id="tpl">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .title{
+        color: red;
+    }
+</style>
+<body>
+    <h1 class="title">hello {{ name }}</h1>
+</body>
+</html>
+    </script>
+    <script>
+    var ret = template('tpl', {
+        name: 'Jack'
+    })
+
+    console.log(ret)
+    document.documentElement.innerHTML = ret;
+</script>
+
